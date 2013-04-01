@@ -27,9 +27,20 @@ remote_file "Vagrant fullstack installer" do
   checksum node['chef-workstation']['vagrant']['package_checksum']
 end
 
-package "vagrant" do
-  source "#{Chef::Config[:file_cache_path]}/#{node['chef-workstation']['vagrant']['package_name']}"
-  action :install
+# FIXME search for / file a ticket
+# when using "package" on debian, it will install from apt rather than
+# the specified source
+case node['platform_family']
+when "debian"
+  dpkg_package "vagrant" do
+    source "#{Chef::Config[:file_cache_path]}/#{node['chef-workstation']['vagrant']['package_name']}"
+    action :install
+  end
+else
+  package "vagrant" do
+    source "#{Chef::Config[:file_cache_path]}/#{node['chef-workstation']['vagrant']['package_name']}"
+    action :install
+  end
 end
 
 execute "vagrant plugin install berkshelf-vagrant" do
@@ -45,5 +56,6 @@ execute "vagrant plugin install vagrant-aws" do
 end
 
 gem_package "bundler" do
-  gem_binary node['chef-workstation']['bento']['gem_binary']
+  gem_binary node['chef-workstation']['vagrant']['gem_binary']
 end
+

@@ -81,10 +81,14 @@ if platform == "ubuntu" and platform_version == "12.04" then
   default['chef-workstation']['vagrant']['package_name'] = "vagrant_x86_64.deb"
   default['chef-workstation']['vagrant']['package_url'] = "http://files.vagrantup.com/packages/87613ec9392d4660ffcb1d5755307136c06af08c/vagrant_x86_64.deb"
   default['chef-workstation']['vagrant']['package_checksum'] = "8cb1ef68e13e257d524366cdf1a6d074ef37a6a391cfd7c36cad6e4712ef0419"
+  default['chef-workstation']['vagrant']['gem_binary'] = '/opt/vagrant/embedded/bin/gem'
+  default['chef-workstation']['vagrant']['bundle_binary'] = '/opt/vagrant/embedded/bin/bundle'
 elsif platform_family == "rhel" and platform_version.to_f >= 6 and platform_version.to_f < 7 then
   default['chef-workstation']['vagrant']['package_url'] = "http://files.vagrantup.com/packages/87613ec9392d4660ffcb1d5755307136c06af08c/vagrant_x86_64.rpm"
   default['chef-workstation']['vagrant']['package_name'] = "vagrant_x86_64.rpm"
   default['chef-workstation']['vagrant']['package_checksum'] = "cfef5ea7fa3ab1c7403898b0cedc4164c0549a3ee56c32b8e36f7d339769e007"
+  default['chef-workstation']['vagrant']['gem_binary'] = '/opt/vagrant/embedded/bin/gem'
+  default['chef-workstation']['vagrant']['bundle_binary'] = '/opt/vagrant/embedded/bin/bundle'
 end
 
 # _bento

@@ -17,11 +17,18 @@
 # implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
 
-# chef
-package "chef" do
+# Downloading an artifact to disk and installing it is the most
+# portable pattern.
+
+remote_file "Chef omnibus installer" do
+  path "#{Chef::Config[:file_cache_path]}/#{node['chef-workstation']['chef']['package_name']}"
   source node['chef-workstation']['chef']['package_url']
+  checksum node['chef-workstation']['chef']['package_checksum']
+end
+
+package "chef" do
+  source "#{Chef::Config[:file_cache_path]}/#{node['chef-workstation']['chef']['package_name']}"
   action :install
 end
 

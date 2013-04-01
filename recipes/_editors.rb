@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: chef-workstation
-# Recipe:: default
+# Recipe:: _packages
 #
 # Copyright 2012-2013, Opscode
 # Author:: Sean OMeara <someara@opscode.com>
@@ -19,10 +19,17 @@
 # limitations under the License.
 #
 
-include_recipe "chef-workstation::_users"
-include_recipe "chef-workstation::_editors"
-include_recipe "chef-workstation::_chef"
-include_recipe "chef-workstation::_knife"
-include_recipe "chef-workstation::_vagrant"
-include_recipe "chef-workstation::_bento"
-include_recipe "chef-workstation::_virtualbox"
+case node['platform_family']
+when "debian"
+  include_recipe "apt"
+end
+
+package "git" do
+  action :install
+end.run_action(:install)
+
+package "curl"
+
+# editors
+package node['chef-workstation']['editors']['vim_package']
+package node['chef-workstation']['editors']['emacs_package']

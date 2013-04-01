@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: chef-workstation
-# Recipe:: default
+# Recipe:: _gem_compile_prereqs
 #
 # Copyright 2012-2013, Opscode
 # Author:: Sean OMeara <someara@opscode.com>
@@ -19,10 +19,6 @@
 # limitations under the License.
 #
 
-include_recipe "chef-workstation::_users"
-include_recipe "chef-workstation::_editors"
-include_recipe "chef-workstation::_chef"
-include_recipe "chef-workstation::_knife"
-include_recipe "chef-workstation::_vagrant"
-include_recipe "chef-workstation::_bento"
-include_recipe "chef-workstation::_virtualbox"
+node['chef-workstation']['gem_compile_prereqs']['packages'].each do |p|
+  package p
+end

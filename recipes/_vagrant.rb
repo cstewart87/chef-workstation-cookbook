@@ -19,14 +19,16 @@
 # limitations under the License.
 #
 
-remote_file "Vagrant Package" do
-  path "/tmp/#{node['chef-workstation']['vagrant']['package_name']}"
+include_recipe "chef-workstation::_gem_compile_prereqs"
+
+remote_file "Vagrant fullstack installer" do
+  path "#{Chef::Config[:file_cache_path]}/#{node['chef-workstation']['vagrant']['package_name']}"
   source node['chef-workstation']['vagrant']['package_url']
-  checksum node['chef-workstation']['vagrant']['checksum']
+  checksum node['chef-workstation']['vagrant']['package_checksum']
 end
 
-dpkg_package "vagrant" do
-  source "/tmp/#{node['chef-workstation']['vagrant']['package_name']}"
+package "vagrant" do
+  source "#{Chef::Config[:file_cache_path]}/#{node['chef-workstation']['vagrant']['package_name']}"
   action :install
 end
 

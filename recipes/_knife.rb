@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: chef-workstation
-# Recipe:: _packages
+# Recipe:: _knife
 #
 # Copyright 2012-2013, Opscode
 # Author:: Sean OMeara <someara@opscode.com>
@@ -19,17 +19,16 @@
 # limitations under the License.
 #
 
-case node['platform_family']
-when "debian"
-  include_recipe "apt"
+include_recipe "chef-workstation::_gem_compile_prereqs"
+
+node['chef-workstation']['knife']['iaas_plugins'].each do |gem|
+  gem_package gem do
+    gem_binary node['chef-workstation']['knife']['gem_binary']
+  end
 end
 
-package "git" do
-  action :install
-end.run_action(:install)
-
-package "curl"
-
-# editors
-package 'vim'
-package 'emacs23-nox'
+node['chef-workstation']['knife']['utils'].each do |gem|
+  gem_package gem do
+    gem_binary node['chef-workstation']['knife']['gem_binary']
+  end
+end

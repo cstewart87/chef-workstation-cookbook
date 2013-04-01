@@ -22,10 +22,7 @@
 # we're going to need to install bento into vagran't embedded ruby environment
 # FIXME create vagrant-bento
 include_recipe "chef-workstation::_vagrant"
-
-# needed to compile gem native extensions
-package 'libxml2-dev'
-package 'libxslt-dev'
+include_recipe "chef-workstation::_gem_compile_prereqs"
 
 # src directory for cookbookery
 directory "#{node['chef-workstation']['user']['home']}/src" do

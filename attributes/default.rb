@@ -26,17 +26,66 @@ default['chef-workstation']['user']['password'] = '$6$T6sYIdBH$DaDmnmBwQnixXkaW0
 default['chef-workstation']['user']['home'] = '/home/opscode'
 default['chef-workstation']['user']['shell'] = '/bin/bash'
 
+# _editors
+case platform_family
+when "debian"
+  default['chef-workstation']['editors']['emacs_package'] = "emacs23-nox"
+  default['chef-workstation']['editors']['vim_package'] = "vim"
+when "rhel"
+  default['chef-workstation']['editors']['emacs_package'] = "emacs-nox"
+  default['chef-workstation']['editors']['vim_package'] = "vim-enhanced"
+end
+  
 # _chef
-default['chef-workstation']['chef']['package_url'] = "https://opscode-omnitruck-release.s3.amazonaws.com/ubuntu/11.04/x86_64/chef_11.4.0-1.ubuntu.11.04_amd64.deb"
+if platform == "ubuntu" and platform_version == "12.04" then
+  default['chef-workstation']['chef']['package_name'] = "chef_11.4.0-1.ubuntu.10.04_amd64.deb"
+  default['chef-workstation']['chef']['package_url'] = "https://opscode-omnibus-packages.s3.amazonaws.com/ubuntu/11.04/x86_64/chef_11.4.0-1.ubuntu.11.04_amd64.deb"
+  default['chef-workstation']['chef']['package_checksum'] = "5099b69f4939d7c42b85aec99d56e1b988d697a4be74b0db627c2548935e9be7"
+elsif platform_family == "rhel" and platform_version.to_f >= 6 and platform_version.to_f < 7 then
+  default['chef-workstation']['chef']['package_name'] = "chef-11.4.0-1.el6.x86_64.rpm"
+  default['chef-workstation']['chef']['package_url'] = "https://opscode-omnibus-packages.s3.amazonaws.com/el/6/x86_64/chef-11.4.0-1.el6.x86_64.rpm"
+  default['chef-workstation']['chef']['package_checksum'] = "a38da78ea6e2890a00086d11f8ed3abd0817db112d86e304dd740685316b4d81"
+end
+  
 default['chef-workstation']['chef']['gem_binary'] = '/opt/chef/embedded/bin/gem'
 default['chef-workstation']['chef']['bundle_binary'] = '/opt/chef/embedded/bin/bundle'
 
-# _vagrant
-default['chef-workstation']['vagrant']['package_name'] = "vagrant_x86_64.deb"
-default['chef-workstation']['vagrant']['package_url'] = "http://files.vagrantup.com/packages/87613ec9392d4660ffcb1d5755307136c06af08c/vagrant_x86_64.deb"
-default['chef-workstation']['vagrant']['package_checksum'] = "8cb1ef68e13e257d524366cdf1a6d074ef37a6a391cfd7c36cad6e4712ef0419"
+# _gem_compile_prereqs
+if platform == "ubuntu" and platform_version == "12.04" then
+  default['chef-workstation']['gem_compile_prereqs']['packages'] = %w{ libxml2-dev libxslt-dev }
+elsif platform_family == "rhel" and platform_version.to_f >= 6 and platform_version.to_f < 7 then
+  default['chef-workstation']['gem_compile_prereqs']['packages'] = %w{ libxml2-devel libxslt-devel }
+end
+
 default['chef-workstation']['vagrant']['gem_binary'] = '/opt/vagrant/embedded/bin/gem'
 default['chef-workstation']['vagrant']['bundle_binary'] = '/opt/vagrant/embedded/bin/bundle'
+
+#_knife
+default['chef-workstation']['knife']['gem_binary'] = node['chef-workstation']['chef']['gem_binary']
+
+default['chef-workstation']['knife']['iaas_plugins'] = %w{
+knife-ec2
+knife-joyent
+knife-openstack
+knife-rackspace
+knife-voxel
+}
+
+default['chef-workstation']['knife']['utils'] = %w{
+knife-easybake
+knife-windows
+}
+
+# _vagrant
+if platform == "ubuntu" and platform_version == "12.04" then
+  default['chef-workstation']['vagrant']['package_name'] = "vagrant_x86_64.deb"
+  default['chef-workstation']['vagrant']['package_url'] = "http://files.vagrantup.com/packages/87613ec9392d4660ffcb1d5755307136c06af08c/vagrant_x86_64.deb"
+  default['chef-workstation']['vagrant']['package_checksum'] = "8cb1ef68e13e257d524366cdf1a6d074ef37a6a391cfd7c36cad6e4712ef0419"
+elsif platform_family == "rhel" and platform_version.to_f >= 6 and platform_version.to_f < 7 then
+  default['chef-workstation']['vagrant']['package_url'] = "http://files.vagrantup.com/packages/87613ec9392d4660ffcb1d5755307136c06af08c/vagrant_x86_64.rpm"
+  default['chef-workstation']['vagrant']['package_name'] = "vagrant_x86_64.rpm"
+  default['chef-workstation']['vagrant']['package_checksum'] = "cfef5ea7fa3ab1c7403898b0cedc4164c0549a3ee56c32b8e36f7d339769e007"
+end
 
 # _bento
 default['chef-workstation']['bento']['repo'] = 'https://github.com/opscode/bento.git'

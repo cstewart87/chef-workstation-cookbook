@@ -12,3 +12,12 @@ I, [2013-04-02T16:49:03.574613 #6655]  INFO -- Kitchen: -----> Destroying <defau
 I, [2013-04-02T16:49:03.576561 #6655]  INFO -- Kitchen: -----> Testing <default-centos-63>
 I, [2013-04-02T16:49:03.576891 #6655]  INFO -- Kitchen: -----> Creating <default-centos-63>
 I, [2013-04-02T16:50:03.085931 #6655]  INFO -- Kitchen: -----> Converging <default-centos-63>
+I, [2013-04-02T16:51:15.810417 #6970]  INFO -- Kitchen: -----> Starting Kitchen
+I, [2013-04-02T16:51:17.792214 #6970]  INFO -- Kitchen: -----> Creating <default-ubuntu-1204>
+I, [2013-04-02T16:52:17.275677 #6970]  INFO -- Kitchen: -----> Converging <default-ubuntu-1204>
+I, [2013-04-02T16:59:56.323792 #6970]  INFO -- Kitchen: -----> Converging <default-centos-63>
+I, [2013-04-02T17:15:02.364964 #6970]  INFO -- Kitchen: -----> Kitchen is finished. (23m46.55s)
+I, [2013-04-02T17:24:17.436642 #7287]  INFO -- Kitchen: -----> Starting Kitchen
+I, [2013-04-02T17:24:19.910652 #7287]  INFO -- Kitchen: -----> Converging <default-ubuntu-1204>
+I, [2013-04-02T17:26:28.788236 #7287]  INFO -- Kitchen: -----> Converging <default-centos-63>
+I, [2013-04-02T17:31:42.827883 #7287]  INFO -- Kitchen: -----> Kitchen is finished. (7m25.39s)

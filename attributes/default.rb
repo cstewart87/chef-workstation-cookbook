@@ -77,6 +77,11 @@ default['chef-workstation']['knife']['utils'] = {
   "knife-windows" => "0.5.12"
 }
 
+# _berkshelf
+default['chef-workstation']['berkshelf']['gems'] = {
+  "berkshelf" => "1.3.1"
+}
+
 # _vagrant
 if platform == "ubuntu" and platform_version == "12.04" then
   default['chef-workstation']['vagrant']['package_name'] = "vagrant_x86_64.deb"
@@ -103,5 +108,4 @@ default['chef-workstation']['bento']['repo'] = 'https://github.com/opscode/bento
 default['chef-workstation']['bento']['branch'] = 'master'
 default['chef-workstation']['bento']['gem_binary'] = node['chef-workstation']['vagrant']['gem_binary']
 default['chef-workstation']['bento']['bundle_binary'] = node['chef-workstation']['vagrant']['bundle_binary']
-
 

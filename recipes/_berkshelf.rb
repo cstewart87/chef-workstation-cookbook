@@ -21,10 +21,13 @@
 
 include_recipe "chef-workstation::_gem_compile_prereqs"
 
-gem_package "berkshelf" do
-  gem_binary node['chef-workstation']['knife']['gem_binary']
-  options("--install-dir=#{node['chef-workstation']['user']['gem_home']}" )
-  notifies :run, 'execute[fix gemhome permissions]', :immediately
+node['chef-workstation']['berkshelf']['gems'].each do |gem,ver|  
+  gem_package gem do
+    gem_binary node['chef-workstation']['knife']['gem_binary']
+    version ver
+    options("--install-dir=#{node['chef-workstation']['user']['gem_home']}" )
+    notifies :run, 'execute[fix gemhome permissions]', :immediately
+  end
 end
 
 # hax

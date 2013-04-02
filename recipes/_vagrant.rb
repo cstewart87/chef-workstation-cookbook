@@ -58,4 +58,3 @@ end
 gem_package "bundler" do
   gem_binary node['chef-workstation']['vagrant']['gem_binary']
 end
-

@@ -33,7 +33,8 @@ group "sudo" do
   append true
 end
 
-cookbook_file "#{node['chef-workstation']['user']['home']}/.bash_profile" do
+template "#{node['chef-workstation']['user']['home']}/.bash_profile" do
+  source ".bash_profile.erb"
   user node['chef-workstation']['user']['name']
   group node['chef-workstation']['user']['group']
 end

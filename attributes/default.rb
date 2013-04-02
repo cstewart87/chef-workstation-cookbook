@@ -19,12 +19,13 @@
 # limitations under the License.
 #
 
-# _user
+# _user 
 default['chef-workstation']['user']['name'] = 'opscode'
 default['chef-workstation']['user']['group'] = 'opscode'
-default['chef-workstation']['user']['password'] = '$6$T6sYIdBH$DaDmnmBwQnixXkaW05B4Jd1ILxEDJ3m4XKhoeiFSxQhBq7c4a/FYqEml1wrm9jlzJ7Cv6rdrLXBgLRlyGm7KF0'
+default['chef-workstation']['user']['password'] = '$6$T6sYIdBH$DaDmnmBwQnixXkaW05B4Jd1ILxEDJ3m4XKhoeiFSxQhBq7c4a/FYqEml1wrm9jlzJ7Cv6rdrLXBgLRlyGm7KF0' #opscodechef
 default['chef-workstation']['user']['home'] = '/home/opscode'
 default['chef-workstation']['user']['shell'] = '/bin/bash'
+default['chef-workstation']['user']['gem_home'] = "#{node['chef-workstation']['user']['home'] }/.gem"
 
 # _editors
 case platform_family
@@ -61,19 +62,19 @@ default['chef-workstation']['vagrant']['gem_binary'] = '/opt/vagrant/embedded/bi
 default['chef-workstation']['vagrant']['bundle_binary'] = '/opt/vagrant/embedded/bin/bundle'
 
 #_knife
-default['chef-workstation']['knife']['gem_binary'] = node['chef-workstation']['chef']['gem_binary']
+default['chef-workstation']['knife']['gem_binary'] = '/opt/chef/embedded/bin/gem'
 
-default['chef-workstation']['knife']['iaas_plugins'] = %w{
-knife-ec2
-knife-joyent
-knife-openstack
-knife-rackspace
-knife-voxel
+default['chef-workstation']['knife']['iaas_plugins'] = {
+  "knife-ec2" => "0.6.2",
+  "knife-joyent" => "0.1.1",
+  "knife-openstack" => "0.7.0",
+  "knife-rackspace" => "0.6.2",
+  "knife-vsphere" => "0.4.0"
 }
 
-default['chef-workstation']['knife']['utils'] = %w{
-knife-easybake
-knife-windows
+default['chef-workstation']['knife']['utils'] = {
+  "knife-easybake" => "0.0.10",
+  "knife-windows" => "0.5.12"
 }
 
 # _vagrant
@@ -91,9 +92,16 @@ elsif platform_family == "rhel" and platform_version.to_f >= 6 and platform_vers
   default['chef-workstation']['vagrant']['bundle_binary'] = '/opt/vagrant/embedded/bin/bundle'
 end
 
+#_test-kitchen
+default['chef-workstation']['test-kitchen']['gems'] = {
+  "test-kitchen" => "1.0.0.alpha.2",
+  "kitchen-vagrant" => "0.7.4"
+}
+
 # _bento
 default['chef-workstation']['bento']['repo'] = 'https://github.com/opscode/bento.git'
 default['chef-workstation']['bento']['branch'] = 'master'
 default['chef-workstation']['bento']['gem_binary'] = node['chef-workstation']['vagrant']['gem_binary']
 default['chef-workstation']['bento']['bundle_binary'] = node['chef-workstation']['vagrant']['bundle_binary']
+
 

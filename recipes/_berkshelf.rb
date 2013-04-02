@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: chef-workstation
-# Recipe:: default
+# Recipe:: _berkshelf
 #
 # Copyright 2012-2013, Opscode
 # Author:: Sean OMeara <someara@opscode.com>
@@ -19,12 +19,21 @@
 # limitations under the License.
 #
 
-include_recipe "chef-workstation::_users"
-include_recipe "chef-workstation::_editors"
-include_recipe "chef-workstation::_chef"
-include_recipe "chef-workstation::_knife"
-include_recipe "chef-workstation::_berkshelf"
-include_recipe "chef-workstation::_vagrant"
-include_recipe "chef-workstation::_test-kitchen"
-include_recipe "chef-workstation::_bento"
-include_recipe "chef-workstation::_virtualbox"
+include_recipe "chef-workstation::_gem_compile_prereqs"
+
+gem_package "berkshelf" do
+  gem_binary node['chef-workstation']['knife']['gem_binary']
+  options("--install-dir=#{node['chef-workstation']['user']['gem_home']}" )
+  notifies :run, 'execute[fix gemhome permissions]', :immediately
+end
+
+# hax
+execute "fix gemhome permissions" do
+  cmd = "chown -R"
+  cmd << " #{node['chef-workstation']['user']['name']}:"
+  cmd << "#{node['chef-workstation']['user']['name']}"
+  cmd << " #{node['chef-workstation']['user']['gem_home']}"  
+  command cmd
+  action :nothing
+end
+

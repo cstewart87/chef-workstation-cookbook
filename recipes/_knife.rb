@@ -21,14 +21,30 @@
 
 include_recipe "chef-workstation::_gem_compile_prereqs"
 
-node['chef-workstation']['knife']['iaas_plugins'].each do |gem|
+node['chef-workstation']['knife']['iaas_plugins'].each do |gem,ver|
   gem_package gem do
     gem_binary node['chef-workstation']['knife']['gem_binary']
+    version ver
+    options("--install-dir=#{node['chef-workstation']['user']['gem_home']}" )
+    notifies :run, 'execute[fix gemhome permissions]', :immediately
   end
 end
 
-node['chef-workstation']['knife']['utils'].each do |gem|
+node['chef-workstation']['knife']['utils'].each do |gem,ver|
   gem_package gem do
     gem_binary node['chef-workstation']['knife']['gem_binary']
+    version ver
+    options("--install-dir=#{node['chef-workstation']['user']['gem_home']}" )
+    notifies :run, 'execute[fix gemhome permissions]', :immediately
   end
+end
+
+# hax
+execute "fix gemhome permissions" do
+  cmd = "chown -R"
+  cmd << " #{node['chef-workstation']['user']['name']}:"
+  cmd << "#{node['chef-workstation']['user']['name']}"
+  cmd << " #{node['chef-workstation']['user']['gem_home']}"  
+  command cmd
+  action :nothing
 end

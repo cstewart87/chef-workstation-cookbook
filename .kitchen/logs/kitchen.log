@@ -1,0 +1,14 @@
+I, [2013-04-02T16:40:43.132040 #6655]  INFO -- Kitchen: -----> Starting Kitchen
+I, [2013-04-02T16:40:45.667616 #6655]  INFO -- Kitchen: -----> Cleaning up any prior instances of <default-ubuntu-1204>
+I, [2013-04-02T16:40:45.668131 #6655]  INFO -- Kitchen: -----> Destroying <default-ubuntu-1204>
+I, [2013-04-02T16:40:45.675315 #6655]  INFO -- Kitchen: -----> Testing <default-ubuntu-1204>
+I, [2013-04-02T16:40:45.675581 #6655]  INFO -- Kitchen: -----> Creating <default-ubuntu-1204>
+I, [2013-04-02T16:41:45.401233 #6655]  INFO -- Kitchen: -----> Converging <default-ubuntu-1204>
+I, [2013-04-02T16:48:56.092757 #6655]  INFO -- Kitchen: -----> Setting up <default-ubuntu-1204>
+I, [2013-04-02T16:48:56.098409 #6655]  INFO -- Kitchen: -----> Verifying <default-ubuntu-1204>
+I, [2013-04-02T16:48:56.105252 #6655]  INFO -- Kitchen: -----> Destroying <default-ubuntu-1204>
+I, [2013-04-02T16:49:03.574200 #6655]  INFO -- Kitchen: -----> Cleaning up any prior instances of <default-centos-63>
+I, [2013-04-02T16:49:03.574613 #6655]  INFO -- Kitchen: -----> Destroying <default-centos-63>
+I, [2013-04-02T16:49:03.576561 #6655]  INFO -- Kitchen: -----> Testing <default-centos-63>
+I, [2013-04-02T16:49:03.576891 #6655]  INFO -- Kitchen: -----> Creating <default-centos-63>
+I, [2013-04-02T16:50:03.085931 #6655]  INFO -- Kitchen: -----> Converging <default-centos-63>

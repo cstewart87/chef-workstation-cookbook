@@ -19,13 +19,14 @@
 # limitations under the License.
 #
 
-include_recipe "chef-workstation::_users"
-include_recipe "chef-workstation::_editors"
-include_recipe "chef-workstation::_chef"
-include_recipe "chef-workstation::_knife"
-include_recipe "chef-workstation::_berkshelf"
-include_recipe "chef-workstation::_vagrant"
-include_recipe "chef-workstation::_test-kitchen"
-include_recipe "chef-workstation::_bento"
-include_recipe "chef-workstation::_virtualbox"
-include_recipe "chef-workstation::_sshd"
+template "/etc/ssh/sshd_config" do
+  source "sshd_config.erb"
+  owner "root"
+  group "root"
+  mode 0600
+  notifies :restart, "service[#{node['chef-workstation']['sshd']['service_name']}]"
+end
+
+service node['chef-workstation']['sshd']['service_name'] do
+  action [:enable,:start]
+end

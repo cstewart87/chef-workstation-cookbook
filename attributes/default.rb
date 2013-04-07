@@ -82,6 +82,18 @@ default['chef-workstation']['berkshelf']['gems'] = {
   "berkshelf" => "1.3.1"
 }
 
+#_test-kitchen
+default['chef-workstation']['test-kitchen']['gems'] = {
+  "test-kitchen" => "1.0.0.alpha.2",
+  "kitchen-vagrant" => "0.7.4"
+}
+
+# _bento
+default['chef-workstation']['bento']['repo'] = 'https://github.com/opscode/bento.git'
+default['chef-workstation']['bento']['branch'] = 'master'
+default['chef-workstation']['bento']['gem_binary'] = node['chef-workstation']['vagrant']['gem_binary']
+default['chef-workstation']['bento']['bundle_binary'] = node['chef-workstation']['vagrant']['bundle_binary']
+
 # _vagrant
 if platform == "ubuntu" and platform_version == "12.04" then
   default['chef-workstation']['vagrant']['package_name'] = "vagrant_x86_64.deb"
@@ -97,15 +109,10 @@ elsif platform_family == "rhel" and platform_version.to_f >= 6 and platform_vers
   default['chef-workstation']['vagrant']['bundle_binary'] = '/opt/vagrant/embedded/bin/bundle'
 end
 
-#_test-kitchen
-default['chef-workstation']['test-kitchen']['gems'] = {
-  "test-kitchen" => "1.0.0.alpha.2",
-  "kitchen-vagrant" => "0.7.4"
-}
-
-# _bento
-default['chef-workstation']['bento']['repo'] = 'https://github.com/opscode/bento.git'
-default['chef-workstation']['bento']['branch'] = 'master'
-default['chef-workstation']['bento']['gem_binary'] = node['chef-workstation']['vagrant']['gem_binary']
-default['chef-workstation']['bento']['bundle_binary'] = node['chef-workstation']['vagrant']['bundle_binary']
-
+# _sshd
+case platform_family
+when "debian"
+  default['chef-target']['sshd']['service_name'] = "ssh"
+when "rhel"
+  default['chef-target']['sshd']['service_name'] = "sshd"
+end

@@ -19,6 +19,7 @@
 # limitations under the License.
 #
 
+include_recipe "build-essential"
 include_recipe "chef-workstation::_users"
 include_recipe "chef-workstation::_editors"
 include_recipe "chef-workstation::_chef"

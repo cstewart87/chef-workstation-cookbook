@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: chef-workstation
-# Recipe:: default
+# Recipe:: _sshd
 #
 # Copyright 2012-2013, Opscode
 # Author:: Sean OMeara <someara@opscode.com>

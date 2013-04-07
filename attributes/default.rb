@@ -112,7 +112,7 @@ end
 # _sshd
 case platform_family
 when "debian"
-  default['chef-target']['sshd']['service_name'] = "ssh"
+  default['chef-workstation']['sshd']['service_name'] = "ssh"
 when "rhel"
-  default['chef-target']['sshd']['service_name'] = "sshd"
+  default['chef-workstation']['sshd']['service_name'] = "sshd"
 end

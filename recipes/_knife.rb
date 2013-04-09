@@ -39,6 +39,42 @@ node['chef-workstation']['knife']['utils'].each do |gem,ver|
   end
 end
 
+# # src directory for easybake
+# directory "#{node['chef-workstation']['user']['home']}/src" do
+#   owner node['chef-workstation']['user']['name']
+#   recursive true
+# end
+
+# # check out bento from git 
+# git 'someara easybake fork' do
+#   destination "#{node['chef-workstation']['user']['home']}/src/knife-easybake"
+#   repository node['chef-workstation']['easybake']['repo']
+#   reference node['chef-workstation']['easybake']['branch']
+#   action :checkout
+#   user node['chef-workstation']['user']['name']
+#   group node['chef-workstation']['user']['group']
+#   notifies :run, 'execute[build knife-easybake]'
+# end
+
+# # build knife-easybake
+# execute "build knife-easybake" do
+#   command "#{node['chef-workstation']['easybake']['gem_binary']} build knife-easybake.gemspec"
+#   environment "HOME" => node['chef-workstation']['user']['home']
+#   user node['chef-workstation']['user']['name']
+#   cwd "#{node['chef-workstation']['user']['home']}/src/knife-easybake"
+#   action :nothing
+#   notifies :run, 'execute[install knife-easybake]'
+# end
+
+# # install knife-easybake
+# execute "install knife-easybake" do
+#   command "#{node['chef-workstation']['easybake']['gem_binary']} install knife-easybake-0.0.10.gem --install-dir /home/opscode/.gem"
+#   environment "HOME" => node['chef-workstation']['user']['home']
+#   user node['chef-workstation']['user']['name']
+#   cwd "#{node['chef-workstation']['user']['home']}/src/knife-easybake"
+#   action :nothing
+# end
+
 # hax
 execute "fix gemhome permissions" do
   cmd = "chown -R"

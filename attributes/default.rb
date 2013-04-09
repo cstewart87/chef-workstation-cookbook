@@ -19,63 +19,31 @@
 # limitations under the License.
 #
 
-# _user 
-default['chef-workstation']['user']['name'] = 'opscode'
-default['chef-workstation']['user']['group'] = 'opscode'
-default['chef-workstation']['user']['password'] = '$6$T6sYIdBH$DaDmnmBwQnixXkaW05B4Jd1ILxEDJ3m4XKhoeiFSxQhBq7c4a/FYqEml1wrm9jlzJ7Cv6rdrLXBgLRlyGm7KF0' #opscodechef
-default['chef-workstation']['user']['home'] = '/home/opscode'
-default['chef-workstation']['user']['shell'] = '/bin/bash'
-default['chef-workstation']['user']['gem_home'] = "#{node['chef-workstation']['user']['home'] }/.gem"
 
-# _editors
-case platform_family
-when "debian"
-  default['chef-workstation']['editors']['emacs_package'] = "emacs23-nox"
-  default['chef-workstation']['editors']['vim_package'] = "vim"
-when "rhel"
-  default['chef-workstation']['editors']['emacs_package'] = "emacs-nox"
-  default['chef-workstation']['editors']['vim_package'] = "vim-enhanced"
-end
-  
-# _chef
-if platform == "ubuntu" and platform_version == "12.04" then
-  default['chef-workstation']['chef']['package_name'] = "chef_11.4.0-1.ubuntu.10.04_amd64.deb"
-  default['chef-workstation']['chef']['package_url'] = "https://opscode-omnibus-packages.s3.amazonaws.com/ubuntu/11.04/x86_64/chef_11.4.0-1.ubuntu.11.04_amd64.deb"
-  default['chef-workstation']['chef']['package_checksum'] = "5099b69f4939d7c42b85aec99d56e1b988d697a4be74b0db627c2548935e9be7"
-elsif platform_family == "rhel" and platform_version.to_f >= 6 and platform_version.to_f < 7 then
-  default['chef-workstation']['chef']['package_name'] = "chef-11.4.0-1.el6.x86_64.rpm"
-  default['chef-workstation']['chef']['package_url'] = "https://opscode-omnibus-packages.s3.amazonaws.com/el/6/x86_64/chef-11.4.0-1.el6.x86_64.rpm"
-  default['chef-workstation']['chef']['package_checksum'] = "a38da78ea6e2890a00086d11f8ed3abd0817db112d86e304dd740685316b4d81"
-end
-  
-default['chef-workstation']['chef']['gem_binary'] = '/opt/chef/embedded/bin/gem'
-default['chef-workstation']['chef']['bundle_binary'] = '/opt/chef/embedded/bin/bundle'
 
-# _gem_compile_prereqs
-if platform == "ubuntu" and platform_version == "12.04" then
-  default['chef-workstation']['gem_compile_prereqs']['packages'] = %w{ libxml2-dev libxslt-dev }
-elsif platform_family == "rhel" and platform_version.to_f >= 6 and platform_version.to_f < 7 then
-  default['chef-workstation']['gem_compile_prereqs']['packages'] = %w{ libxml2-devel libxslt-devel }
-end
-
-default['chef-workstation']['vagrant']['gem_binary'] = '/opt/vagrant/embedded/bin/gem'
-default['chef-workstation']['vagrant']['bundle_binary'] = '/opt/vagrant/embedded/bin/bundle'
 
 #_knife
 default['chef-workstation']['knife']['gem_binary'] = '/opt/chef/embedded/bin/gem'
 
 default['chef-workstation']['knife']['iaas_plugins'] = {
-  "knife-ec2" => "0.6.2",
-  "knife-joyent" => "0.1.1",
-  "knife-openstack" => "0.7.0",
-  "knife-rackspace" => "0.6.2",
-  "knife-vsphere" => "0.4.0"
+ "knife-ec2" => "0.6.2",
+ "knife-joyent" => "0.1.1",
+ "knife-openstack" => "0.7.0",
+ "knife-rackspace" => "0.6.2",
+ "knife-vsphere" => "0.4.0"
 }
 
 default['chef-workstation']['knife']['utils'] = {
-  "knife-easybake" => "0.0.10",
-  "knife-windows" => "0.5.12"
+ "knife-easybake" => "0.0.10",
+ "knife-windows" => "0.5.12"
 }
+
+# FIXME remove after easybake gem is updated
+# _easybake
+default['chef-workstation']['easybake']['repo'] = 'https://github.com/someara/knife-easybake.git'
+default['chef-workstation']['easybake']['branch'] = 'validation_key'
+default['chef-workstation']['easybake']['gem_binary'] = node['chef-workstation']['chef']['gem_binary']
+default['chef-workstation']['easybake']['bundle_binary'] = node['chef-workstation']['chef']['bundle_binary']
 
 # _berkshelf
 default['chef-workstation']['berkshelf']['gems'] = {
